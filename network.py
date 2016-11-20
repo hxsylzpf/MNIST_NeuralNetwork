@@ -12,7 +12,7 @@
 """
 import time
 from activate import *
-import load as input_data
+import load_data as input_data
 
 
 class NeuralNetwork(object):

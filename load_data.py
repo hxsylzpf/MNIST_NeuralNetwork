@@ -1,13 +1,14 @@
+# -*- coding:utf-8 -*-
 
 """
-load MNIST Data File and support downloading the file from Internet if loacal dir doesn't exist
-
-source_url = 'http://yann.lecun.com/exdb/mnist/'
-
-__author__ = 'liujiezhang'
-__mail__ = 'liujiezhangbupt@gmail.com'
-__time__ = 2016/10/12
-
+@version: 1.0
+@author: kevin
+@license: Apache Licence
+@contact: liujiezhang@bupt.edu.cn
+@site:
+@software: PyCharm Community Edition
+@file: network_mini_batch.py
+@time: 16/10/11 上午11:52
 """
 
 from __future__ import absolute_import, absolute_import, print_function

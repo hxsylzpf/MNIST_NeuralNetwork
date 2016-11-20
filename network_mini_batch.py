@@ -11,7 +11,7 @@
 @time: 16/10/14 上午09:12
 """
 import os
-import load as input_data
+import load_data as input_data
 
 from activate import *
 
