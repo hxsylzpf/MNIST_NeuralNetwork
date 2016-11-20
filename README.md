@@ -12,7 +12,8 @@ python network_mini_batch.py
 MNIST_tensorflow.py —— CNN model
 python MNIST_tensorflow.py
 ```
-    **Don't worry you have no train data in your local, it supports download the data set from the internet!.**
+
+  **Don't worry you have no train data in your local, it supports download the data set from the internet!.**
 
 ### Nerual Networks
 You can define how many hidden layers and cells in this Neural Networks, it's flexible. You can make it by configuring the parameter "sizes".
