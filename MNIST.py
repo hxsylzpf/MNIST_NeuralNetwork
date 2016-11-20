@@ -1,9 +1,9 @@
 #!/usr/bin/python3
 
-import numpy as np
-import pandas as pd
 import time
 from activate import *
+import load as input_data
+
 
 class NeuralNetwork(object):
 
@@ -156,3 +156,10 @@ class NeuralNetwork(object):
         data = zip([np.reshape(x, (784, 1)) for x in data_images],
                    [np.reshape(y, (10, 1)) for y in data_labels])
         return data
+
+if __name__ == '__main__':
+    mnist = input_data.readDataSets('data', one_hot=True)
+    train_data = mnist.train
+    validation_data = mnist.validation
+    nn = NeuralNetwork(784,80,10)
+    nn.train(train_data, epochs=5000,test_set=validation_data,batch_size=20)

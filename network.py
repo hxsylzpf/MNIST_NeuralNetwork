@@ -13,6 +13,7 @@
 import os
 import numpy as np
 import random
+import load as input_data
 
 from activate import *
 
@@ -217,3 +218,11 @@ class NN(object):
         data = zip([np.reshape(x, (784, 1)) for x in data_images],
                    [np.reshape(y, (10, 1)) for y in data_labels])
         return data
+
+if __name__ == '__main__':
+    mnist = input_data.readDataSets('data', one_hot=True)
+    train_data = mnist.train
+    validation_data = mnist.validation
+    nn = NN(sizes=[784,70,10], epochs=50000, mini_batch_size=10,learning_rate=0.2)
+    nn.fit(train_data, validation_data=validation_data)
+    nn.save()
