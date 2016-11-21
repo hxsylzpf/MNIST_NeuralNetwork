@@ -28,13 +28,15 @@ class NeuralNetwork(object):
         self.input_size = in_units
         self.output_size = out_units
         self.hidden_size = hidden_units
-        self.activate_func = [sigmoid,sigmoidDerivative]
+        self.activate_func = [sigmoid, sigmoidDerivative]
         # Learning parameters
         self.rate = 6.0
 
         # Weight parameters, randomly initialized
-        self.W1 = np.random.uniform(-0.5, 0.5, (self.input_size, self.hidden_size))
-        self.W2 = np.random.uniform(-0.5, 0.5, (self.hidden_size, self.output_size))
+        self.W1 = np.random.uniform(-0.5, 0.5,
+                                    (self.input_size, self.hidden_size))
+        self.W2 = np.random.uniform(-0.5, 0.5,
+                                    (self.hidden_size, self.output_size))
 
     def configure(self, rate=None):
         """Change the learning parameters of the network."""
@@ -42,20 +44,22 @@ class NeuralNetwork(object):
 
     def init_weights(self):
         """Initialize weights using Nguyen-Widrow."""
-        self.W1 = np.random.uniform(-0.5, 0.5, (self.input_size, self.hidden_size))
-        self.W2 = np.random.uniform(-0.5, 0.5, (self.hidden_size, self.output_size))
+        self.W1 = np.random.uniform(-0.5, 0.5,
+                                    (self.input_size, self.hidden_size))
+        self.W2 = np.random.uniform(-0.5, 0.5,
+                                    (self.hidden_size, self.output_size))
 
         # Initialize the hidden layer weights
         beta = 0.7 * (self.hidden_size ** (1.0 / self.input_size))
         for n in range(self.hidden_size):
-            norm_val = np.linalg.norm(self.W1[:,n])
-            self.W1[:,n] = np.multiply(self.W1[:,n], beta / norm_val)
+            norm_val = np.linalg.norm(self.W1[:, n])
+            self.W1[:, n] = np.multiply(self.W1[:, n], beta / norm_val)
 
         # Initialize the output layer weights
         beta = 0.7 * (self.output_size ** (1.0 / self.hidden_size))
         for n in range(self.output_size):
-            norm_val = np.linalg.norm(self.W2[:,n])
-            self.W2[:,n] = np.multiply(self.W2[:,n], beta / norm_val)
+            norm_val = np.linalg.norm(self.W2[:, n])
+            self.W2[:, n] = np.multiply(self.W2[:, n], beta / norm_val)
 
     def forward(self, sample):
         """Forward propagation through the network.
@@ -72,7 +76,7 @@ class NeuralNetwork(object):
         estimate: ndarray of shape (output_size,n), where n is number of samples
         target  : ndarray of shape (output_size,n)
         """
-        return np.mean(np.mean((target - estimate) ** 2,axis=0))
+        return np.mean(np.mean((target - estimate) ** 2, axis=0))
 
     def cost_prime(self, sample, target, estimate):
         """Gradient descent derivative.
@@ -82,10 +86,11 @@ class NeuralNetwork(object):
         """
         total = len(sample)
 
-        delta3 = np.multiply(-(target - estimate), self.activate_func[-1](self.Z3))
+        delta3 = np.multiply(-(target - estimate),
+                             self.activate_func[-1](self.Z3))
         dW2 = np.multiply(np.dot(self.A2, delta3.T), 2 / total)
 
-        delta2 = np.dot(self.W2,delta3) * self.activate_func[-1](self.Z2)
+        delta2 = np.dot(self.W2, delta3) * self.activate_func[-1](self.Z2)
         dW1 = np.multiply(np.dot(sample, delta2.T), 2 / total)
 
         return dW1, dW2
@@ -93,7 +98,8 @@ class NeuralNetwork(object):
     def evaluate(self, sample, target):
         """Evaluate network performace using given data."""
         results = self.forward(sample.T)
-        pairs = [(np.argmax(x), np.argmax(y)) for x, y in zip(results.T, target.T)]
+        pairs = [(np.argmax(x), np.argmax(y))
+                 for x, y in zip(results.T, target.T)]
         correct = sum(int(x == y) for x, y in pairs)
         return correct
 
@@ -132,12 +138,12 @@ class NeuralNetwork(object):
                 train_data_images, train_data_labels = train_data.next_batch(
                     batch_size)
                 # 格式化数据
-                mini_batches = self.formData(train_data_images, train_data_labels)
+                mini_batches = self.formData(
+                    train_data_images, train_data_labels)
                 batch_datas.append(mini_batches)
 
-
             for batch_data in batch_datas:
-                images,labels = [],[]
+                images, labels = [], []
                 for data in batch_data:
                     images.append(data[0])
                     labels.append(data[1])
@@ -175,5 +181,5 @@ if __name__ == '__main__':
     mnist = input_data.readDataSets('data', one_hot=True)
     train_data = mnist.train
     validation_data = mnist.validation
-    nn = NeuralNetwork(784,80,10)
-    nn.train(train_data, epochs=5000,test_set=validation_data,batch_size=20)
+    nn = NeuralNetwork(784, 80, 10)
+    nn.train(train_data, epochs=5000, test_set=validation_data, batch_size=20)

@@ -20,6 +20,7 @@ class NN(object):
     '''
     NN model supported any hidden layers by configuring the parameters named "sizes"
     '''
+
     def __init__(self, sizes=list(), learning_rate=1.0, mini_batch_size=16, epochs=10):
         '''
         参数初始化
@@ -142,7 +143,7 @@ class NN(object):
         nabla_b[-1] = error
         nabla_w[-1] = error.dot(self._activations[-2].transpose())
         # 后向计算每层的传播误差
-        for l in range(1,self.num_layers - 1)[::-1]:
+        for l in range(1, self.num_layers - 1)[::-1]:
             # print(l)
             # print(np.shape(self.weights[l + 1].transpose()))
             # print(np.shape(error))
@@ -221,6 +222,7 @@ if __name__ == '__main__':
     mnist = input_data.readDataSets('data', one_hot=True)
     train_data = mnist.train
     validation_data = mnist.validation
-    nn = NN(sizes=[784,70,10], epochs=50000, mini_batch_size=10,learning_rate=0.2)
+    nn = NN(sizes=[784, 70, 10], epochs=50000,
+            mini_batch_size=10, learning_rate=0.2)
     nn.fit(train_data, validation_data=validation_data)
     nn.save()
